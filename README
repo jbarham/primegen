@@ -1,0 +1,23 @@
+primegen.go is a Go package that generates prime numbers in order using the
+Sieve of Atkin instead of the traditional Sieve of Eratosthenes.
+
+It is a relatively straightforward port of D. J. Bernstein's original
+C implementation (http://cr.yp.to/primegen.html) but makes use of
+Go's concurrency features which should make it faster on multi-core CPUs.
+
+Do "goinstall github.com/jbarham/primegen.go" to install the package.
+
+Once installed, do "godoc github.com/jbarham/primegen.go" to view the package
+documentation.
+
+The repository includes two additional programs that illustrate usage of the
+primegen package:
+
+  1. primes, which writes prime numbers to standard out
+  2. primespeed, which prints the time taken to generate the first
+     50,847,534 prime numbers
+
+These programs are built with the included Makefile.bin.
+
+John Barham
+jbarham@gmail.com
