@@ -1,6 +1,9 @@
 package primegen
 
-import "runtime"
+import (
+	"runtime"
+	"sync"
+)
 
 var two = [32]uint32{
 	0x00000001, 0x00000002, 0x00000004, 0x00000008,
@@ -458,7 +461,7 @@ var sieveParams = []doitParams{
 	{15, doit12, 72, 96, for12, 59},
 }
 
-func doit(pg *Primegen, Lmodqq []uint32, paramsIdx chan int, done chan bool) {
+func doit(pg *Primegen, Lmodqq []uint32, paramsIdx chan int, wg *sync.WaitGroup) {
 	for idx := range paramsIdx {
 		if idx == -1 {
 			break
@@ -470,7 +473,7 @@ func doit(pg *Primegen, Lmodqq []uint32, paramsIdx chan int, done chan bool) {
 		}
 		squarefreetiny(buf, Lmodqq, p.q)
 	}
-	done <- true
+	wg.Done()
 }
 
 func (pg *Primegen) sieve() {
@@ -500,9 +503,10 @@ func (pg *Primegen) sieve() {
 	// Create GOMAXPROCS doit threads.
 	maxprocs := runtime.GOMAXPROCS(-1)
 	cp := make(chan int)
-	done := make(chan bool)
+	var wg sync.WaitGroup
+	wg.Add(maxprocs)
 	for i = 0; i < maxprocs; i++ {
-		go doit(pg, Lmodqq, cp, done)
+		go doit(pg, Lmodqq, cp, &wg)
 	}
 
 	// Send params index to threads.
@@ -513,10 +517,7 @@ func (pg *Primegen) sieve() {
 	for i = 0; i < maxprocs; i++ {
 		cp <- -1
 	}
-	// Wait for threads to finish.
-	for i = 0; i < maxprocs; i++ {
-		<-done
-	}
+	wg.Wait()
 
 	squarefree49(buf, L, 247)
 	squarefree49(buf, L, 253)
