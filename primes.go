@@ -1,12 +1,12 @@
 package main
 
 import (
-	"os"
-	"fmt"
-	"log"
 	"flag"
-	"strconv"
+	"fmt"
 	"github.com/jbarham/primegen.go"
+	"log"
+	"os"
+	"strconv"
 )
 
 var low, high uint64 = 2, 1000000000
@@ -21,7 +21,7 @@ func main() {
 	flag.Parse()
 
 	args := flag.Args()
-	var err os.Error
+	var err error
 	if len(args) == 1 {
 		high, err = strconv.Atoui64(args[0])
 		if err != nil {

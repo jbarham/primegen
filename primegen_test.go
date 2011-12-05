@@ -1,9 +1,9 @@
 package primegen
 
 import (
-	"testing"
 	"crypto/md5"
 	"encoding/hex"
+	"testing"
 )
 
 type primegenTest struct {
@@ -23,7 +23,7 @@ func TestSieve(t *testing.T) {
 	for _, test := range golden {
 		h.Reset()
 		Write(h, 1, test.high)
-		sum := hex.EncodeToString(h.Sum())
+		sum := hex.EncodeToString(h.Sum(nil))
 		if sum != test.checksum {
 			t.Errorf("Invalid checksum for high value %d: Expected %s, got %s\n", test.high, test.checksum, sum)
 		}

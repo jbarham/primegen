@@ -6,9 +6,8 @@
 package primegen
 
 import (
-	"os"
-	"io"
 	"bufio"
+	"io"
 )
 
 const (
@@ -111,7 +110,7 @@ const ndigits = 32
 
 // Write efficiently writes the list of prime numbers between low and high,
 // separated by newline, to w.
-func Write(w io.Writer, low, high uint64) (err os.Error) {
+func Write(w io.Writer, low, high uint64) (err error) {
 	var i int
 	digits := make([]byte, 32)
 	digits[ndigits-1] = '\n'
