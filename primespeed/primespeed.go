@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/jbarham/primegen.go"
 	"time"
+
+	"github.com/jbarham/primegen"
 )
 
 func main() {

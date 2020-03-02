@@ -3,10 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/jbarham/primegen.go"
 	"log"
 	"os"
 	"strconv"
+
+	"github.com/jbarham/primegen"
 )
 
 var low, high uint64 = 2, 1000000000
